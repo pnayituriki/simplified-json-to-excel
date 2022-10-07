@@ -2,7 +2,7 @@
 
 The simplified-json-to-excel is a package designed to simplify your work.
 
-Have you been stugling with exporting your data as excel file, here is a package that is ready to help you.
+Have you been struggling with exporting your data as excel file, here is a package that is ready to help you.
 All you have to think about are data and nothing else.
 
 ## Installation
