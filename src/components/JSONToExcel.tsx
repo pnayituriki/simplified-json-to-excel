@@ -1,22 +1,10 @@
-import React from "react";
 import * as XLSX from "xlsx";
 
 // type any[] is for single sheet file
 // type { sheetName: string; data: any[] }[] is for multiple sheets file
 export type FileDataType = any[] | { sheetName: string; data: any[] }[];
 
-interface JSONToExcelProps
-  extends React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  > {
-  fileData: FileDataType;
-  fileName: string;
-  children?: React.ReactNode;
-}
-
-export const JSONToExcel: React.FC<JSONToExcelProps> = (props) => {
-  const { children, fileData, fileName } = props;
+export const JSONToExcel = (fileData: FileDataType, fileName: string) => {
   const fileExtension = ".xlsx";
 
   const exportToCSV = (excelData: FileDataType, fileName: string) => {
@@ -41,11 +29,7 @@ export const JSONToExcel: React.FC<JSONToExcelProps> = (props) => {
     }
   };
 
-  return (
-    <button onClick={() => exportToCSV(fileData, fileName)} {...props}>
-      {children ? children : "Export Excel"}
-    </button>
-  );
+  return exportToCSV(fileData, fileName);
 };
 
 // THIS FUNCTION WILL LOOP THROUGH THE ARRAY GIVEN TO CHECK WEEVER
@@ -53,16 +37,15 @@ export const JSONToExcel: React.FC<JSONToExcelProps> = (props) => {
 const FN_IsDataForMultiple = (
   data: { sheetName: string; data: any[] }[]
 ): boolean => {
-  let i = 0;
-  while (i < data.length) {
-    if (
-      data[i].sheetName === undefined ||
-      typeof data[i].sheetName !== "string" ||
-      data[i].data === undefined ||
-      Array.isArray(data[i].data) === false
+  if (
+    data.find(
+      (item) =>
+        item.sheetName === undefined ||
+        typeof item.sheetName !== "string" ||
+        item.data === undefined ||
+        Array.isArray(item.data) === false
     )
-      return false;
-    i++;
-  }
+  )
+    return false;
   return true;
 };
