@@ -13,6 +13,14 @@ export const JSONToExcel = (fileData: FileDataType, fileName: string) => {
       excelData.forEach((dataItem: { sheetName: string; data: any[] }) => {
         const worksheet = XLSX.utils.json_to_sheet(dataItem.data);
         XLSX.utils.book_append_sheet(workbook, worksheet, dataItem.sheetName);
+        /* fix headers */
+        XLSX.utils.sheet_add_aoa(
+          worksheet,
+          [FN_GenerateHeaders(dataItem.data[0])],
+          {
+            origin: "A1",
+          }
+        );
       });
 
       XLSX.writeFile(workbook, fileName + fileExtension, {
@@ -22,6 +30,10 @@ export const JSONToExcel = (fileData: FileDataType, fileName: string) => {
     } else {
       const worksheet = XLSX.utils.json_to_sheet(excelData);
       const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      /* fix headers */
+      XLSX.utils.sheet_add_aoa(worksheet, [FN_GenerateHeaders(excelData[0])], {
+        origin: "A1",
+      });
       XLSX.writeFile(workbook, fileName + fileExtension, {
         bookType: "xlsx",
         type: "array",
@@ -29,6 +41,7 @@ export const JSONToExcel = (fileData: FileDataType, fileName: string) => {
     }
   };
 
+  const t1 = performance.now();
   return exportToCSV(fileData, fileName);
 };
 
@@ -48,4 +61,10 @@ const FN_IsDataForMultiple = (
   )
     return false;
   return true;
+};
+
+const FN_GenerateHeaders = (data: {}): string[] => {
+  return Object.keys(data).map((itemHeader) =>
+    (itemHeader.charAt(0).toUpperCase() + itemHeader.slice(1)).replace("_", " ")
+  );
 };

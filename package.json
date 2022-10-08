@@ -12,7 +12,10 @@
     "excel",
     "json",
     "generate",
-    "convert"
+    "convert",
+    "simplified",
+    "report",
+    "multiple sheets"
   ],
   "scripts": {
     "build-lib": "rollup -c"
