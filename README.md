@@ -2,8 +2,8 @@
 
 The simplified-json-to-excel is a package designed to simplify your work.
 
-Have you been struggling with exporting your data as excel file, here is a package that is ready to help you.
-All you have to think about are data and nothing else.
+You may export your JSON data as an Excel file with this package.
+A json data is all you need to consider; nothing else.
 
 ## Installation
 
@@ -21,7 +21,12 @@ Install simplified-json-to-excel with yarn
 
 ## Documentation
 
-# Usage => Data format
+### Features
+
+- Convert json to excel with signle sheet
+- Convert json to excel with multiple sheet
+
+### Usage => Data format
 
 `Single sheet excel file`
 By default JSONToExcel accept an array of objects and generate an excel file with only one sheet.
@@ -83,7 +88,7 @@ Here is an example of the acceptable data format for multiple sheets excel file.
 
 This example will generate one Excel file with two sheets: Group A & Group B;
 
-## Usage/Examples
+### Usage/Examples
 
 ```javascript
 import { JSONToExcel } from "simplified-json-to-excel";
